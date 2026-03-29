@@ -1,4 +1,17 @@
-# Architettura Observability Stack
+# Laboratorio Observability
+Negli ultimi anni l’evoluzione delle architetture digitali — cloud‑native, data‑driven e sempre più **agentiche**, ha messo in evidenza un limite strutturale dei modelli tradizionali di monitoraggio: la difficoltà di comprendere i meccanismi causali che governano il comportamento dei sistemi, oltre la semplice osservazione dei sintomi. In questo scenario, l’**observability** non è più un tema esclusivamente operativo, ma una capacità strategica per garantire affidabilità, controllo e sostenibilità dell’evoluzione tecnologica.
+
+Le organizzazioni operano oggi in **ecosistemi altamente distribuiti** e **interdipendenti**, in cui applicazioni, piattaforme dati e agenti software cooperano in modo dinamico per supportare processi critici di business. In tali contesti, caratterizzati da comportamenti emergenti, decisioni autonome e flussi non sempre deterministici, il monitoraggio tradizionale e la gestione reattiva degli incidenti risultano insufficienti. La capacità di ottenere una **visione integrata**, contestualizzata e continuativa dello stato dei sistemi, comprendendo non solo cosa accade, ma perché accade, diventa essenziale per preservare continuità operativa, qualità dei dati e fiducia nei processi decisionali.
+
+Quando applicata come fondamento delle Intelligent Operations, l’observability abilita segnali affidabili, correlazione degli eventi, automazione e allineamento tra dimensione tecnica e impatto di business. Questo approccio consente di ridurre il rumore operativo, anticipare le criticità e trasformare informazioni frammentate in insight azionabili, permettendo interventi tempestivi e controllati anche in contesti ad alta criticità e time‑sensitivity.
+
+È all’interno di questa visione che nasce il **Laboratorio di Observability**: uno spazio strutturato di sperimentazione progettato per tradurre principi architetturali in capacità concrete. Il laboratorio consente di validare pattern, strumenti e approcci operativi, osservando come telemetria, correlazione, visualizzazione e automazione cooperino lungo un ciclo continuo di osservazione, decisione e azione, accompagnando un percorso di maturazione da modelli reattivi verso approcci progressivamente più proattivi e predittivi.
+
+In particolare, il laboratorio esplora il ruolo dell’observability come **abilitatore chiave dello sviluppo agentico**. In sistemi basati su agenti — capaci di prendere decisioni autonome, orchestrare azioni e interagire con altri sistemi — l’observability diventa una condizione imprescindibile di governabilità. Solo attraverso una visibilità profonda su contesto, decisioni, effetti e impatti è possibile introdurre autonomia in modo responsabile, mantenendo controllo, auditabilità e allineamento agli obiettivi di business.
+
+In questa prospettiva, l’observability non è un accessorio dell’operatività né un semplice prerequisito tecnico: è la base strutturale su cui costruire soluzioni agentiche affidabili, scalabili e sostenibili, rendendo possibile l’evoluzione verso operazioni assistite e, selettivamente, autonome senza introdurre rischio sistemico.
+
+# Architettura Observability Stack | Laboratorio
 L'infrastruttura realizzata è basata sullo standard <b>OpenTelemetry (OTel)</b>, un framework open-source che permette di raccogliere, elaborare ed esportare dati di telemetria (metriche, tracce e log) in modo indipendente dal fornitore.
 
 L'architettura segue un modello a "pipeline" dove i dati fluiscono dalle applicazioni agentiche fino alla visualizzazione finale su Grafana.
