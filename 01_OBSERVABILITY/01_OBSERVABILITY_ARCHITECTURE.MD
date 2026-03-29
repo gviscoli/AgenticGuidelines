@@ -16,7 +16,7 @@ L'infrastruttura realizzata è basata sullo standard <b>OpenTelemetry (OTel)</b>
 
 L'architettura segue un modello a "pipeline" dove i dati fluiscono dalle applicazioni agentiche fino alla visualizzazione finale su Grafana.
 
-![Architettura](/Images/Architecture/HLA.jpg)
+![Architettura](/Images/Architecture/Observability_HLA.jpg)
 
 Questa rappresentazione mostra il percorso completo dei dati implemetata nel laboratorio per  la valutazione di diversi approcci nello sviluppo di <b>applicazioni agentiche</b>.
 
@@ -69,11 +69,11 @@ Documentazione: [Prometheus Overview](https://prometheus.io/docs/introduction/ov
 
 #### Dashboarda della soluzione multi-agente
 
-![Dashboard applicazione agentica multi-agente](./Images/Dashboard/A2A_01.png)
+![Dashboard applicazione agentica multi-agente](/Images/Dashboard/A2A_01.png)
 
 #### Dashboard della soluzione mono-agente con skills
 
-![Dashboard applicazione agentica mono-agente con skills](./Images/Dashboard/SKILLS_01.png)
+![Dashboard applicazione agentica mono-agente con skills](/Images/Dashboard/SKILLS_01.png)
 
 
 Documentazione: [Grafana Documentation](https://grafana.com/docs// "Grafana Documentation") 
