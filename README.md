@@ -3,4 +3,4 @@
 
 
 
-![Working in Progress](/Images/wip.jpg)
+![Working in Progress](/Images/WIP.jpg)
