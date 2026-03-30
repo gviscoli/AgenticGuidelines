@@ -23,7 +23,7 @@
 
 ### 1.1 Multi-Agent con comunicazione A2A
 
-**Definizione:**
+#### Definizione
 
 Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità del sistema è incapsulata in un agente autonomo e indipendente, ciascuno eseguito come processo separato con il proprio ciclo di vita, modello LLM e stack di dipendenze. Gli agenti comunicano tra loro attraverso un protocollo standardizzato di messaggistica — in questo caso **A2A (Agent-to-Agent)**, sviluppato da Google — che definisce un'interfaccia HTTP uniforme tramite la quale gli agenti si scoprono a vicenda, dichiarano le proprie capacità e si scambiano task e risposte.
 
@@ -31,17 +31,17 @@ Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità 
 
 ![A2A Multi-Agent Demo](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo.png)
 
-**Funzionamento:**
+#### Funzionamento
 
 Il supervisore non conosce a priori l'implementazione degli agenti. Al momento della chiamata, recupera dinamicamente la **AgentCard** dell'agente target — un documento JSON esposto all'endpoint `/.well-known/agent.json` — che dichiara nome, versione, capabilities, modalità di input/output e skill disponibili. Sulla base di questa auto-descrizione, il supervisore costruisce e invia un `SendMessageRequest` A2A. L'agente riceve la richiesta, la elabora autonomamente e restituisce un `Task` completato con gli artefatti di risposta.
 
 La propagazione del contesto distribuito avviene tramite header **W3C TraceContext** (`traceparent`) iniettati in ogni chiamata HTTP, permettendo la ricostruzione della trace end-to-end in sistemi come Jaeger.
 
-**Sequence Diagram**
+#### Sequence Diagram
 
 ![01_a2a_multi-agent_demo sequence diagram](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_sequence.png)
 
-**Architettura Applicativa**
+#### Architettura Applicativa
 
 ![01_a2a_multi-agent_demo architettura applicativa](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_apparch.png)
 
@@ -63,7 +63,7 @@ Tutte le comunicazioni tra il supervisor e gli agenti avvengono esclusivamente v
 
 ### 1.2 Single-Agent con Skills dinamiche
 
-**Definizione:**
+#### Definizione
 
 Un sistema **single-agent con skills dinamiche** è un'architettura monolitica in-process in cui un unico agente supervisore ingloba tutte le capacità del sistema sotto forma di **skill** — classi Python caricate dinamicamente a runtime. Non esistono processi separati né comunicazione di rete interna. Ogni skill è un modulo autonomo che incapsula il proprio LLM, i propri tool e la propria logica, ma viene istanziato e invocato direttamente all'interno del processo del supervisore.
 
@@ -73,27 +73,31 @@ La caratteristica distintiva di questa implementazione è la **SKILL.md discover
 
 ![Skills Demo](/Images/ApplicationArchitecture/02_skills_demo.png)
 
-**Meccanismo di funzionamento:**
+#### Funzionamento
 
 Al boot, il `SkillLoader` scansiona la directory `skills/`, trova ogni sottocartella con un `SKILL.md`, ne fa il parsing del frontmatter YAML, importa dinamicamente la classe Python corrispondente via `importlib`, istanzia la skill e inietta in essa un `AgentMetrics` e un `Tracer` OpenTelemetry dedicati. Costruisce poi per ogni skill un `@ai_function` wrapper — con nome e docstring estratti dal SKILL.md — che fa da ponte tra il LLM supervisore e la skill.
 
 Quando il supervisore riceve una richiesta, il LLM (Bedrock) analizza il testo e decide quale tool invocare. L'invocazione è una chiamata Python sincrona diretta: nessuna rete, nessuna serializzazione HTTP. La skill esegue il proprio agente Ollama in un thread separato (via `ThreadPoolExecutor`) per non bloccare l'event loop di uvicorn.
 
-```
-Flusso di una singola richiesta:
+#### Sequence Diagram
 
-CLIENT
-  │── SendMessageRequest ──► SUPERVISOR (Bedrock: analisi + routing)
-                                  │
-                                  └── tool call in-process
-                                        └── MeteoSkill.execute("Che tempo fa a Roma?")
-                                              └── ThreadPoolExecutor
-                                                    └── asyncio.run(ChatAgent.run(...))
-                                                          └── Ollama risponde
-                                  risposta aggregata ──► CLIENT
-```
+![02_skills_demo sequence diagram](/Images/ApplicationArchitecture/02_skills_demo_sequence.png)
 
----
+#### Architettura Applicativa
+
+![alt text](/Images/ApplicationArchitecture/02_skills_demo_apparch.png)
+
+Approccio Skills (mono-agente) — un singolo processo Python su porta 9000 che contiene tutto:
+
+1. Il SkillLoader al boot scansiona skills/*/SKILL.md, scopre le skill disponibili, e registra dinamicamente i tool nel ChatAgent del Supervisor
+
+2. Ogni Skill (Meteo, Notizie, Valute, Mappe) è una classe Python che estende BaseSkill, con il proprio ChatAgent interno e i propri tool
+
+3. Le skill vengono chiamate in-process (nessuna comunicazione di rete, nessun handoff HTTP) — il Supervisor invoca direttamente i metodi Python
+
+Aggiungere una nuova skill = creare una cartella skills/nome/ con SKILL.md + classe. Zero modifiche al codice del supervisor. L'A2A protocol viene usato solo per la comunicazione Client → Supervisor
+
+Rispetto alla versione A2A multi-agent: nessuna latenza di rete interna, un solo processo da gestire, nessun service discovery runtime. Il trade-off è che non puoi scalare le skill indipendentemente e un crash nel processo blocca tutto.
 
 ## 2. Confronto architetturale
 
