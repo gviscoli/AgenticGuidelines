@@ -7,7 +7,7 @@
 
 ## Indice
 
-1. [Definizioni](#1-definizioni)
+1. [Definizioni](#1-Architetture-Agentiche)
    - 1.1 [Multi-Agent con comunicazione A2A](#11-multi-agent-con-comunicazione-a2a)
    - 1.2 [Single-Agent con Skills dinamiche](#12-single-agent-con-skills-dinamiche)
 2. [Confronto architetturale](#2-confronto-architetturale)
@@ -19,12 +19,9 @@
 
 ---
 
-## 1. Definizioni
+## 1. Architetture Agentiche
 
 ### 1.1 Multi-Agent con comunicazione A2A
-
-#### Definizione
-
 Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità del sistema è incapsulata in un agente autonomo e indipendente, ciascuno eseguito come processo separato con il proprio ciclo di vita, modello LLM e stack di dipendenze. Gli agenti comunicano tra loro attraverso un protocollo standardizzato di messaggistica — in questo caso **A2A (Agent-to-Agent)**, sviluppato da Google — che definisce un'interfaccia HTTP uniforme tramite la quale gli agenti si scoprono a vicenda, dichiarano le proprie capacità e si scambiano task e risposte.
 
 **Struttura del sistema multi-agente (preso come riferimento il progetto `01_a2a_multi-agent_demo`):**
@@ -40,6 +37,10 @@ La propagazione del contesto distribuito avviene tramite header **W3C TraceConte
 #### Sequence Diagram
 
 ![01_a2a_multi-agent_demo sequence diagram](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_sequence.png)
+
+ciao 
+
+<img src="/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_sequence.png" alt="01_a2a_multi-agent_demo sequence diagram" width="600">
 
 #### Architettura Applicativa
 
@@ -62,8 +63,6 @@ L'applicazione implementa il pattern Supervisor/Worker (gerarchico) con protocol
 Tutte le comunicazioni tra il supervisor e gli agenti avvengono esclusivamente via A2A protocol, rendendo ogni agente indipendente e sostituibile.
 
 ### 1.2 Single-Agent con Skills dinamiche
-
-#### Definizione
 
 Un sistema **single-agent con skills dinamiche** è un'architettura monolitica in-process in cui un unico agente supervisore ingloba tutte le capacità del sistema sotto forma di **skill** — classi Python caricate dinamicamente a runtime. Non esistono processi separati né comunicazione di rete interna. Ogni skill è un modulo autonomo che incapsula il proprio LLM, i propri tool e la propria logica, ma viene istanziato e invocato direttamente all'interno del processo del supervisore.
 
