@@ -11,7 +11,7 @@ Le tabelle che seguono mettono a confronto le due architetture su criteri concre
 
 
 ## Architettura
->| Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
+| Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Definizione | Un singolo agente AI gestisce tutte le fasi: pianificazione, esecuzione, valutazione. Opera indipendentemente con la propria logica e tool. | Due o più agenti specializzati collaborano sotto un orchestratore. Ogni agente ha ruolo, competenze e tool dedicati. |
 | Complessità Architetturale | Bassa: un prompt, un modello, tool opzionali. Nessuna comunicazione inter-agente. | Alta: richiede orchestrazione, protocolli comunicazione, gestione stato condiviso, retry e fallback. |
