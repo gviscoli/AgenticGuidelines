@@ -1,8 +1,6 @@
 # Architetture Agentiche a Confronto
 ## Multi-Agent A2A vs Single-Agent con Skills dinamiche
 
-> Documento tecnico basato sull'analisi dei progetti `01_a2a_multi-agent_demo` e `02_skills_demo`.
-
 ---
 
 ## Architetture Agentiche
