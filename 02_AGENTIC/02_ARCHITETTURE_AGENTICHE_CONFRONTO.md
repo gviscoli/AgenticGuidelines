@@ -1,5 +1,16 @@
 # Comparazione: Soluzioni Agentiche Mono-Agente vs Multi-Agente
 
+## Perché confrontare architetture mono-agente e multi-agente?
+L'adozione di sistemi agentici basati su LLM sta accelerando rapidamente: secondo IBM, i workflow abilitati da AI agent passeranno dal 3% al 25% entro fine 2025, mentre Gartner prevede che il 33% del software enterprise includerà componenti agentiche entro il 2028.
+
+Di fronte a questa crescita, la prima decisione architetturale che ogni team deve affrontare è apparentemente semplice ma ha conseguenze profonde: è sufficiente un singolo agente, oppure servono più agenti specializzati che collaborano?
+
+Non esiste una risposta universale. Un sistema mono-agente — un singolo LLM con i propri tool — è più veloce da costruire, più semplice da debuggare e perfettamente adeguato per task con scope ben definito. Un sistema multi-agente — dove agenti specializzati si dividono il lavoro sotto un orchestratore — diventa necessario quando crescono la complessità del dominio, i requisiti di parallelismo, o i vincoli di sicurezza e compliance.
+
+Il rischio concreto è duplice: scegliere un'architettura multi-agente quando un singolo agente basterebbe significa moltiplicare costi, latenza e complessità operativa senza benefici reali. Ma restare su un singolo agente quando il task lo supera porta a perdita di contesto, allucinazioni e un sistema fragile che non scala.
+
+Le tabelle che seguono mettono a confronto le due architetture su criteri concreti — dalla latenza al costo per token, dal fault tolerance ai use case reali — per fornire un framework decisionale basato su dati e non su hype. L'obiettivo non è stabilire quale approccio sia "migliore", ma aiutare a identificare quale sia quello giusto per il proprio caso specifico, seguendo il principio su cui Microsoft, Google e LangChain convergono: partire sempre con un singolo agente, validare il ROI, e evolvere verso un sistema multi-agente solo quando i requisiti lo richiedono.
+
 ## Architettura
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
@@ -96,7 +107,7 @@ Un bug in produzione richiede di correlare log da 5 processi separati, identific
 
 ---
 
-### 3.2 Single-Agent con Skills — Pro e Contro
+### Single-Agent con Skills — Pro e Contro
 
 #### ✅ Pro
 
