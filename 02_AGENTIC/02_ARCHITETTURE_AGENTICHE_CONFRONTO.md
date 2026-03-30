@@ -1,6 +1,6 @@
 # Comparazione: Soluzioni Agentiche Mono-Agente vs Multi-Agente
 
-## ARCHITETTURA
+## Architettura
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Definizione | Un singolo agente AI gestisce tutte le fasi: pianificazione, esecuzione, valutazione. Opera indipendentemente con la propria logica e tool. | Due o più agenti specializzati collaborano sotto un orchestratore. Ogni agente ha ruolo, competenze e tool dedicati. |
@@ -9,7 +9,7 @@
 | Orchestrazione | Non necessaria (esecuzione lineare) | Necessaria: centralizzata (supervisor), decentralizzata (peer-to-peer), o ibrida |
 | Gestione Stato | Contesto unificato in un'unica finestra | Stato condiviso tra agenti; richiede persistence, checkpointing, context propagation |
 
-## PERFORMANCE & SCALABILITÀ
+## Performance & Scalabilità
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Latenza | Bassa: nessun handoff tra agenti, risposta diretta | Più alta: ogni handoff aggiunge latenza; ottimizzabile con parallelismo |
@@ -17,7 +17,7 @@
 | Scalabilità | Verticale (modello più potente); non scala orizzontalmente | Orizzontale: aggiunta di agenti specialisti; scala con il volume dei task |
 | Context Window | Rischio di overflow: un agente deve contenere tutto il contesto | Context isolation: ogni agente lavora solo con il contesto rilevante (67% meno token — LangChain benchmark) |
 
-## AFFIDABILITÀ & MANUTENZIONE
+## Affidabilità & Manutenzione
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Fault Tolerance | Single point of failure: se l'agente fallisce, tutto si ferma | Resiliente: un agente può fallire senza bloccare il sistema; retry, degradation, escalation |
@@ -26,7 +26,7 @@
 | Costo Operativo | Basso: meno token, meno API call, infra semplice | Più alto: token moltiplicati per agente; API call multiple; ma model tiering riduce 40-60% i costi |
 | Manutenibilità | Facile: un prompt da gestire, un modello | Più complessa ma modulare: ogni agente è aggiornabile indipendentemente |
 
-## USE CASE IDEALI
+## Use Cases
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Chatbot / FAQ | ✓ Ideale: risposte dirette da knowledge base | Overkill per FAQ semplici |
@@ -37,23 +37,23 @@
 | Compliance / Security Boundaries | Non adatto: non può isolare dati per policy | ✓ Necessario: agenti con permessi diversi per data isolation (Microsoft CAF) |
 | Diagnostica Medica | 74% accuracy (baseline) | 89% accuracy con agenti specialisti (Mayo Clinic case study 2025) |
 
-## COSTI & ROI
+## Costi & ROI
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Costo Sviluppo | Basso: ore/giorni per setup | Medio-Alto: settimane per orchestrazione, testing, observability |
 | Costo Runtime (Token) | ~1x (baseline) | ~2-5x (moltiplicato per agenti); riducibile 40-60% con model tiering |
 | ROI Potenziale | Buono per task specifici ad alto volume | Eccellente per workflow complessi: Klarna — $40M/anno risparmiati, resolution time da 11min a <2min |
 
-## RACCOMANDAZIONE
+## Raccomandazioni
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
 | Quando Partire con Single-Agent | ✓ Task ben definito, scope ristretto, contesto in un'unica finestra, MVP/PoC, budget limitato | — |
 | Quando Passare a Multi-Agent | — | ✓ Task multi-dominio, >4 step, necessità di parallelismo, compliance boundaries, scaling enterprise |
 | Best Practice | Partire SEMPRE con single-agent; validare ROI; evolvere a multi-agent solo quando necessario (Microsoft, Google, LangChain concordano) | Partire SEMPRE con single-agent; validare ROI; evolvere a multi-agent solo quando necessario (Microsoft, Google, LangChain concordano) |
 
-## 3. Pro e Contro
+## Pro e Contro
 
-### 3.1 Multi-Agent A2A — Pro e Contro
+### Multi-Agent A2A — Pro e Contro
 
 #### ✅ Pro
 
@@ -142,7 +142,7 @@ Le skill devono risiedere sullo stesso filesystem del supervisor. Non è possibi
 
 ---
 
-## 4. Quando scegliere quale approccio
+## Quando scegliere quale approccio
 
 ### Scegliere Multi-Agent A2A quando:
 
@@ -164,33 +164,50 @@ Le skill devono risiedere sullo stesso filesystem del supervisor. Non è possibi
 
 ---
 
-## 5. Dati osservati nei test
+## Fonti e Riferimenti Web Utilizzati
 
-I seguenti dati sono stati misurati con il benchmark `traffic_simulator_benchmark.py` inviando le stesse domande in parallelo a entrambi i sistemi (72 richieste totali, 3 cicli, modalità random, domande su 5 categorie).
+### Single-Agent vs Multi-Agent
 
-| Metrica | Multi-Agent A2A | Single-Agent Skills | Δ |
-|---|---|---|---|
-| Richieste totali | 72 | 72 | — |
-| Successi | 72 | 72 | — |
-| Errori | 0 | 0 | — |
-| **Latenza media** | **5.27s** | **3.50s** | Skills -33.6% |
-| Latenza minima | 2.18s | 1.48s | Skills -32.1% |
-| Latenza massima | 13.68s | 11.03s | Skills -19.4% |
-| **P95** | **11.35s** | **6.75s** | **Skills -40.5%** |
+| Fonte / Titolo | URL | Data / Note |
+|---|---|---|
+| Lyzr — Multi-Agent vs Single-Agent | https://www.lyzr.ai/blog/multi-agent-vs-single-agent/ | Mar 2026 |
+| Analytics Vidhya — Single-Agent vs Multi-Agent Systems | https://www.analyticsvidhya.com/blog/2026/01/single-agent-vs-multi-agent-systems/ | Gen 2026 |
+| Kubiya — Single Agent vs Multi Agent AI: Which Is Better? | https://www.kubiya.ai/blog/single-agent-vs-multi-agent-in-ai | Lug 2025 |
+| Taskade — Single Agent vs Multi-Agent AI Teams (2026 Guide) | https://www.taskade.com/blog/single-agent-systems-versus-multi-agent-ai-teams | Feb 2026 |
+| TechAhead — Single vs Multi-Agent AI: Which to Choose? | https://www.techaheadcorp.com/blog/single-vs-multi-agent-ai/ | Feb 2026 |
+| Gino Marín — Single vs Multi-Agent AI: Complete Guide 2025 | https://www.ginomarin.com/articles/single-vs-multi-agent-ai | 2025 |
+| Microsoft Learn — Choosing Single-Agent or Multi-Agent Systems (CAF) | https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ai-agents/single-agent-multiple-agents | Dic 2025 |
+| arXiv — Single-agent or Multi-agent Systems? Why Not Both? (2505.18286) | https://arxiv.org/abs/2505.18286 | Mag 2025 |
+| Experro — Single Agent vs Multi Agent AI: Which to Choose in 2026? | https://www.experro.com/blog/single-agent-vs-multi-agent-ai/ | Mag 2025 |
 
-### Per categoria:
+### Pattern Multi-Agente & Orchestrazione
 
-| Categoria | A2A avg | Skills avg | Vincitore | Δ assoluto |
-|---|---|---|---|---|
-| Mappe | 5.17s | 3.37s | Skills | -1.80s |
-| Meteo | 3.58s | 3.71s | A2A | +0.13s |
-| **Misto** | **7.41s** | **4.25s** | **Skills** | **-3.16s** |
-| Notizie | 5.86s | 3.16s | Skills | -2.70s |
-| Valute | 4.77s | 3.16s | Skills | -1.61s |
+| Fonte / Titolo | URL | Data / Note |
+|---|---|---|
+| Microsoft Azure Architecture — AI Agent Orchestration Patterns | https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns | Feb 2026 |
+| Google Cloud — Choose a Design Pattern for Agentic AI | https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system | Ott 2025 |
+| LangChain Blog — Choosing the Right Multi-Agent Architecture | https://blog.langchain.com/choosing-the-right-multi-agent-architecture/ | Gen 2026 |
+| AI-AgentsPlus — Multi-Agent Orchestration Patterns 2026 | https://www.ai-agentsplus.com/blog/multi-agent-orchestration-patterns-2026 | Mar 2026 |
+| Codebridge — Multi-Agent Systems & AI Orchestration Guide 2026 | https://www.codebridge.tech/articles/mastering-multi-agent-orchestration-coordination-is-the-new-scale-frontier | Feb 2026 |
+| AgileSoftLabs — Multi-Agent AI Systems Enterprise Guide | https://www.agilesoftlabs.com/blog/2026/03/multi-agent-ai-systems-enterprise-guide | Mar 2026 |
+| Chanl — The Multi-Agent Pattern That Actually Works in Production | https://www.chanl.ai/es/blog/multi-agent-orchestration-patterns-production-2026 | Mar 2026 |
+| Swfte AI — Multi-Agent AI Systems for Enterprise 2026 | https://www.swfte.com/blog/multi-agent-ai-systems-enterprise | Dic 2025 |
+| DEV.to — How to Build Multi-Agent Systems: Complete 2026 Guide | https://dev.to/eira-wexford/how-to-build-multi-agent-systems-complete-2026-guide-1io6 | Gen 2026 |
 
-**Nota sulla categoria "meteo":** L'unica categoria dove A2A risulta marginalmente più veloce (0.13s, trascurabile) è probabilmente dovuta a varianza statistica nel campione ridotto. L'agente Meteo usa tool placeholder (nessuna chiamata esterna reale), quindi il suo tempo di elaborazione è quasi interamente LLM — identico tra le due architetture.
+## Confronto Framework Agentici
 
-**Nota sulla categoria "misto":** Il vantaggio delle Skills è massimo qui (+74% di velocità rispetto all'A2A) perché le domande miste richiedono 2-4 deleghe. Nell'A2A ogni delega aggiunge un round-trip HTTP; nelle Skills ogni delega è una chiamata in-process. Il vantaggio si moltiplica linearmente con il numero di deleghe.
+| Fonte / Titolo | URL | Data / Note |
+|---|---|---|
+| GuruSup — Best Multi-Agent Frameworks 2026: LangGraph, CrewAI... | https://gurusup.com/blog/best-multi-agent-frameworks-2026 | Mar 2026 |
+| Let's Data Science — AI Agent Frameworks 2026: LangGraph vs CrewAI & More | https://letsdatascience.com/blog/ai-agent-frameworks-compared | Mar 2026 |
+| DEV.to — Top 7 AI Agent Frameworks 2026: Developer's Guide | https://dev.to/paxrel/top-7-ai-agent-frameworks-in-2026-a-developers-comparison-guide-hcm | Mar 2026 |
+| Turing — A Detailed Comparison of Top 6 AI Agent Frameworks 2026 | https://www.turing.com/resources/ai-agent-frameworks | Feb 2026 |
+| Softmax Data — Definitive Guide to Agentic Frameworks 2026 | https://blog.softmaxdata.com/definitive-guide-to-agentic-frameworks-in-2026-langgraph-crewai-ag2-openai-and-more/ | Feb 2026 |
+| O-Mega — LangGraph vs CrewAI vs AutoGen: Top 10 AI Agent Frameworks | https://o-mega.ai/articles/langgraph-vs-crewai-vs-autogen-top-10-agent-frameworks-2026 | Gen 2026 |
+| xPay — Top 10 AI Agent Frameworks 2026 | https://www.xpay.sh/blog/article/top-ai-agent-frameworks/ | Feb 2026 |
+| StackOne — 120+ Agentic AI Tools Mapped [2026] | https://www.stackone.com/blog/ai-agent-tools-landscape-2026/ | Mar 2026 |
+| OrchestrAI — Best AI Agent Frameworks 2026 (Ranked) | https://orchestrai.eu/blog/best-ai-agent-frameworks-2026 | Mar 2026 |
+| Ampcome — 7 Best AI Agent Frameworks Compared (2026) | https://www.ampcome.com/post/top-7-ai-agent-frameworks-in-2025 | Ott 2025 (agg. 2026) |
 
 ---
 
