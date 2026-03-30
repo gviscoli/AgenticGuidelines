@@ -31,28 +31,35 @@ Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità 
 
 ![A2A Multi-Agent Demo](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo.png)
 
-**Meccanismo di funzionamento:**
+**Funzionamento:**
 
 Il supervisore non conosce a priori l'implementazione degli agenti. Al momento della chiamata, recupera dinamicamente la **AgentCard** dell'agente target — un documento JSON esposto all'endpoint `/.well-known/agent.json` — che dichiara nome, versione, capabilities, modalità di input/output e skill disponibili. Sulla base di questa auto-descrizione, il supervisore costruisce e invia un `SendMessageRequest` A2A. L'agente riceve la richiesta, la elabora autonomamente e restituisce un `Task` completato con gli artefatti di risposta.
 
 La propagazione del contesto distribuito avviene tramite header **W3C TraceContext** (`traceparent`) iniettati in ogni chiamata HTTP, permettendo la ricostruzione della trace end-to-end in sistemi come Jaeger.
 
-```
-Flusso di una singola richiesta:
+**Sequence Diagram**
 
-CLIENT
-  │── SendMessageRequest ──► SUPERVISOR (Bedrock: analisi + routing)
-                                  │
-                                  ├── ThreadPoolExecutor
-                                  │     └── asyncio.run(call_agent(:8001))
-                                  │           ├── GET /.well-known/agent.json
-                                  │           └── POST /   ← SendMessageRequest
-                                  │                          MeteoAgent risponde
-                                  │
-                                  └── risposta aggregata ──► CLIENT
-```
+![01_a2a_multi-agent_demo sequence diagram](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_sequence.png)
 
----
+**Architettura Applicativa**
+
+![01_a2a_multi-agent_demo architettura applicativa](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_apparch.png)
+
+L'applicazione implementa il pattern Supervisor/Worker (gerarchico) con protocollo A2A (Agent-to-Agent di Google). Il flusso implementato prevede:
+
+1. Il Client scopre il Supervisor via /.well-known/agent.json, poi invia richieste A2A
+
+2. Il Supervisor (Voyager) su porta 8000 usa un ChatAgent con AWS Bedrock come LLM, che decide quale tool invocare (chiedi_meteo, chiedi_notizie, chiedi_valute, chiedi_mappe)
+
+3. Ogni tool function esegue una chiamata A2A al rispettivo agent specializzato tramite ThreadPoolExecutor + asyncio.run
+
+4. Ogni Agent specializzato (porte 8001-8004) ha il proprio ChatAgent con LLM (Ollama o Bedrock), tool interni che chiamano API esterne (ExchangeRate, Nominatim/OpenStreetMap, ecc.), e restituisce un Task con artifacts
+
+5. Il Supervisor raccoglie i risultati, li passa a Bedrock per una sintesi finale, e restituisce la risposta al Client
+
+6. OpenTelemetry è integrato a ogni livello per tracing distribuito e metriche
+
+Tutte le comunicazioni tra il supervisor e gli agenti avvengono esclusivamente via A2A protocol, rendendo ogni agente indipendente e sostituibile.
 
 ### 1.2 Single-Agent con Skills dinamiche
 
