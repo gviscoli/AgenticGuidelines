@@ -5,23 +5,9 @@
 
 ---
 
-## Indice
+## Architetture Agentiche
 
-1. [Definizioni](#1-Architetture-Agentiche)
-   - 1.1 [Multi-Agent con comunicazione A2A](#11-multi-agent-con-comunicazione-a2a)
-   - 1.2 [Single-Agent con Skills dinamiche](#12-single-agent-con-skills-dinamiche)
-2. [Confronto architetturale](#2-confronto-architetturale)
-3. [Pro e Contro](#3-pro-e-contro)
-   - 3.1 [Multi-Agent A2A](#31-multi-agent-a2a--pro-e-contro)
-   - 3.2 [Single-Agent con Skills](#32-single-agent-con-skills--pro-e-contro)
-4. [Quando scegliere quale approccio](#4-quando-scegliere-quale-approccio)
-5. [Dati osservati nei test](#5-dati-osservati-nei-test)
-
----
-
-## 1. Architetture Agentiche
-
-### 1.1 Multi-Agent con comunicazione A2A
+### Multi-Agent con comunicazione A2A
 Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità del sistema è incapsulata in un agente autonomo e indipendente, ciascuno eseguito come processo separato con il proprio ciclo di vita, modello LLM e stack di dipendenze. Gli agenti comunicano tra loro attraverso un protocollo standardizzato di messaggistica — in questo caso **A2A (Agent-to-Agent)**, sviluppato da Google — che definisce un'interfaccia HTTP uniforme tramite la quale gli agenti si scoprono a vicenda, dichiarano le proprie capacità e si scambiano task e risposte.
 
 **Struttura del sistema multi-agente (preso come riferimento il progetto `01_a2a_multi-agent_demo`):**
@@ -62,7 +48,7 @@ L'applicazione implementa il pattern Supervisor/Worker (gerarchico) con protocol
 
 Tutte le comunicazioni tra il supervisor e gli agenti avvengono esclusivamente via A2A protocol, rendendo ogni agente indipendente e sostituibile.
 
-### 1.2 Single-Agent con Skills dinamiche
+### Single-Agent con Skills dinamiche
 
 Un sistema **single-agent con skills dinamiche** è un'architettura monolitica in-process in cui un unico agente supervisore ingloba tutte le capacità del sistema sotto forma di **skill** — classi Python caricate dinamicamente a runtime. Non esistono processi separati né comunicazione di rete interna. Ogni skill è un modulo autonomo che incapsula il proprio LLM, i propri tool e la propria logica, ma viene istanziato e invocato direttamente all'interno del processo del supervisore.
 
@@ -97,27 +83,6 @@ Approccio Skills (mono-agente) — un singolo processo Python su porta 9000 che 
 Aggiungere una nuova skill = creare una cartella skills/nome/ con SKILL.md + classe. Zero modifiche al codice del supervisor. L'A2A protocol viene usato solo per la comunicazione Client → Supervisor
 
 Rispetto alla versione A2A multi-agent: nessuna latenza di rete interna, un solo processo da gestire, nessun service discovery runtime. Il trade-off è che non puoi scalare le skill indipendentemente e un crash nel processo blocca tutto.
-
-## 2. Confronto tra le due architetture
-
-| Dimensione | Multi-Agent A2A | Single-Agent + Skills |
-|---|---|---|
-| **Processi** | 5 (1 supervisor + 4 agenti) | 1 |
-| **Porte di rete** | 8000, 8001, 8002, 8003, 8004 | 9000 |
-| **Comunicazione interna** | HTTP/REST (A2A protocol) | Chiamata Python diretta |
-| **Serializzazione** | JSON su socket TCP | Nessuna |
-| **Scoperta capabilities** | AgentCard via HTTP | SKILL.md via filesystem |
-| **Configurazione supervisor** | Hardcoded (URL agenti, tool names) | Automatica da SKILL.md |
-| **System prompt supervisor** | Hardcoded nel codice | Generato dai corpi SKILL.md |
-| **Aggiungere una nuova unit** | Nuovo processo + modifica supervisor | Nuova cartella con SKILL.md |
-| **LLM supervisor** | Amazon Bedrock | Amazon Bedrock |
-| **LLM unità specializzate** | Ollama (per agente) | Ollama (per skill) |
-| **Overhead di rete interno** | Sì (round-trip HTTP per ogni delega) | No |
-| **Latenza media osservata** | ~5.27s | ~3.50s |
-| **Isolamento dei fault** | Totale (crash di un agente non abbatte il sistema) | Parziale (errore di una skill è una eccezione nel processo) |
-| **Scalabilità orizzontale** | Nativa (ogni agente scalabile indipendentemente) | Richiede replica dell'intero processo |
-| **Telemetria distribuita** | Trace end-to-end con propagazione W3C | Span in-process, nessuna propagazione rete |
-| **Wire latency misurabile** | Sì (kind="wire" vs kind="total") | Non applicabile |
 
 ---
 

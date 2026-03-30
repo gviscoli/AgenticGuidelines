@@ -136,4 +136,7 @@ Separare completamente:
 | agent      | meteo, mappe, etc   |
 | tipo       | supervisor / worker |
 
+
 ---
+
+*Documento aggiornato al 30 marzo 2026*

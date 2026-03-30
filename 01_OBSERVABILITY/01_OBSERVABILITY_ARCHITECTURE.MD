@@ -91,3 +91,7 @@ Il percorso che compie una metrica, per esempio <b>agent_input_tokens_total</b> 
 4. <b>Archiviazione</b>: Prometheus legge i dati dal Collector e li salva nel suo database interno.
 
 5. <b>Visualizzazione</b>: Grafana esegue una query (PromQL) su Prometheus e disegna il grafico in tempo reale.
+
+---
+
+*Documento aggiornato al 30 marzo 2026*

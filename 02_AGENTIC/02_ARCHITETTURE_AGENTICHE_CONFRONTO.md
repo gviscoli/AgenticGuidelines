@@ -85,8 +85,6 @@ La propagazione del `traceparent` W3C attraverso le chiamate HTTP permette di ri
 **Standard interoperabile.**
 Il protocollo A2A è un standard emergente (Google, 2025). Un agente scritto con A2A può essere sostituito da un agente di un altro vendor o framework che implementa lo stesso protocollo, senza modificare il supervisore.
 
----
-
 #### ❌ Contro
 
 **Complessità operativa elevata.**
@@ -127,8 +125,6 @@ Grazie all'iniezione di `AgentMetrics` dedicati per ogni skill, le metriche most
 
 **Debugging immediato.**
 Un singolo stack trace Python contiene l'intera catena di chiamata: supervisor → skill → tool → risposta. Non serve correlare log da processi diversi o ricostruire trace distribuite.
-
----
 
 #### ❌ Contro
 
