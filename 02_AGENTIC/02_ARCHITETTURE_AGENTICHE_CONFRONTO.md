@@ -11,6 +11,8 @@ Il rischio concreto è duplice: scegliere un'architettura multi-agente quando un
 
 Le tabelle che seguono mettono a confronto le due architetture su criteri concreti — dalla latenza al costo per token, dal fault tolerance ai use case reali — per fornire un framework decisionale basato su dati e non su hype. L'obiettivo non è stabilire quale approccio sia "migliore", ma aiutare a identificare quale sia quello giusto per il proprio caso specifico, seguendo il principio su cui Microsoft, Google e LangChain convergono: partire sempre con un singolo agente, validare il ROI, e evolvere verso un sistema multi-agente solo quando i requisiti lo richiedono.
 
+> [!NOTE]
+> **Fonti e Riferimenti Web — Single-Agent vs Multi-Agent**
 ## Architettura
 | Criterio | Single-Agent (Mono-Agente) | Multi-Agent |
 |---|---|---|
