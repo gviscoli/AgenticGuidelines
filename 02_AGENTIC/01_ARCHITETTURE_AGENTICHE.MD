@@ -10,7 +10,7 @@ Un sistema **multi-agent** è un'architettura distribuita in cui ogni capacità 
 
 **Struttura del sistema multi-agente (preso come riferimento il progetto `01_a2a_multi-agent_demo`):**
 
-![A2A Multi-Agent Demo](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo.png)
+![A2A Multi-Agent Demo](/Images/ApplicationArchitecture/01_a2a_multi-agent_demo_docker.png)
 
 #### Funzionamento
 
@@ -56,7 +56,7 @@ La caratteristica distintiva di questa implementazione è la **SKILL.md discover
 
 **Struttura del sistema mono-agente (preso come riferimento il progetto `02_skills_demo`):**
 
-![Skills Demo](/Images/ApplicationArchitecture/02_skills_demo.png)
+![Skills Demo](/Images/ApplicationArchitecture/02_skills_demo_docker.png)
 
 #### Funzionamento
 
