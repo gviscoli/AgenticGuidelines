@@ -1,3 +1,38 @@
+# I quattro pilastri dell'architettura agentica
+Lo sviluppo di sistemi agentici basati su LLM ha prodotto in pochi mesi un ecosistema ricco ma terminologicamente caotico. Termini come **"ReAct"**, **"function calling"**, **"supervisor pattern"** e **"MCP"**, **A2A** vengono spesso raggruppati sotto l'etichetta generica di "design pattern", ma in realtà appartengono a categorie concettuali distinte che operano a livelli diversi dello stack. Confonderli non è solo un problema accademico: porta a decisioni architetturali sbagliate, perché significa mescolare il come un agente ragiona con il come è strutturato il sistema o il come i componenti comunicano.
+
+Per orientarsi in questo panorama, è utile scomporre il vocabolario dell'agentic AI in **quattro categorie fondamentali**, ciascuna con un ruolo preciso nella progettazione di un sistema agentico.
+
+## La tassonomia per l'agentic AI
+
+### Paradigmi di ragionamento 
+Descrivono come l'agente pensa. Sono strategie cognitive, non strutture architetturali. **Chain-of-Thought**, **ReAct (Think-Act-Observe)**, **Tree of Thoughts**, **Reflexion** e **Graph of Thoughts** fanno parte di questa categoria. Sono più vicini ad algoritmi o strategie non sono dei design pattern. **ReAct** in particolare è un framework concettuale: definisce un loop (reason → act → observe) ma non prescrive come strutturare il sistema che lo implementa.
+
+### Meccanismi di interazione
+Descrivono come l'agente agisce. **Function Calling**, **Code-as-Action** e **Computer Use** sono meccanismi. Sono le **"interfacce"** tra l'agente e l'ambiente esterno. In termini di software engineering, sono più simili a protocolli o API contract che a design pattern.
+
+### Design pattern
+Nella definizione classica del software engineering (Gang of Four, 1994), un design pattern è una soluzione riusabile a un problema ricorrente in un contesto specifico. Ha quattro elementi: 
+- un nome, 
+- un problema che risolve, 
+- una struttura della soluzione, 
+- trade-off documentati. 
+
+Il punto chiave è che un design pattern è prescrittivo a livello di struttura: ti dice come organizzare i componenti. Descrivono come strutturare il sistema. Qui rientrano i pattern multi-agente: **Supervisor/Worker**, **Pipeline/Sequential**, **Peer-to-Peer**, **Maker-Checker**, **Router**, **Subagents**, **Handoffs**. Questi sono design pattern nel senso classico: hanno un problema (coordinare agenti specializzati), una soluzione strutturale (un orchestratore delega a worker), e trade-off chiari (single point of failure sull'orchestratore vs. controllo centralizzato).
+
+### Protocolli e standard
+Descrivono come i componenti comunicano. **MCP**, **A2A** e **ACP** sono protocolli. Non sono design pattern, così come HTTP non è un design pattern anche se abilita pattern come REST.
+
+## Perché la distinzione conta
+Nella pratica, un sistema agentico di produzione combina elementi da tutte e quattro le categorie. Ad esempio, un Agente usa il **paradigma di ragionamento ReAct** (dentro ogni ChatAgent), il **meccanismo Function Calling** (per invocare i tool), il **design pattern Supervisor/Worker** (il supervisor delega agli agent specializzati), e il **protocollo A2A** (per la comunicazione di rete).
+
+
+## La terminologia che si sta consolidando
+La letteratura del 2026 converge su una terminologia a livelli che rispecchia questa distinzione. L'articolo di riferimento su arXiv (Agentic AI: Architectures, Taxonomies) propone una tassonomia a sei dimensioni: Core Components, Cognitive Architecture, Learning, Multi-Agent Systems, Environments, Evaluation. Il paper di ScienceDirect (Agentic AI: The Age of Reasoning) identifica cinque "key patterns": Tool Use, Reflection, ReAct, Planning e Multi-Agent Collaboration — ma usa il termine "pattern" in senso ampio, non nel senso GoF.
+
+La proposta più pulita è quella che emerge dalla sintesi delle fonti: usare "agentic design patterns" per i pattern architetturali di coordinazione (Supervisor/Worker, Pipeline, ecc.) e "reasoning paradigms" per le strategie cognitive (ReAct, CoT, ToT). In questo modo si evita ambiguità.
+
+
 I paradigmi dello sviluppo agentico
 Lo sviluppo di sistemi agentici si è evoluto attraverso paradigmi progressivamente più sofisticati. Non si tratta di fasi che si sostituiscono, ma di livelli che si accumulano: i sistemi di produzione del 2026 ne combinano tipicamente quattro o cinque contemporaneamente.
 1. Chain-of-Thought (CoT)
@@ -17,7 +52,7 @@ Agenti specializzati si coordinano per risolvere problemi complessi. Come ho det
 8. Computer Use
 L'agente interagisce con interfacce grafiche (browser, desktop) come farebbe un umano — clic, scroll, digitazione. Introdotto da Anthropic con Claude 3.5 Sonnet nel 2024 e da OpenAI con Operator nel 2025. Questo paradigma estende l'action space dagli API strutturati a qualsiasi software dotato di interfaccia.
 
-Panoramica su Tools, Skills e tecnologie emergenti
+## Panoramica su Tools, Skills e tecnologie emergenti
 Questo è il punto dove la confusione è massima nel 2026. Facciamo chiarezza.
 Tools (Function Calling)
 Un tool è una funzione deterministica che un agente può invocare. Ha uno schema di input/output definito, fa sempre la stessa cosa per lo stesso input, e restituisce un risultato strutturato. Esempi: get_weather("Roma"), search_database(query), send_email(to, subject, body).
