@@ -19,12 +19,14 @@ Il supervisore non conosce a priori l'implementazione degli agenti. Al momento d
 La propagazione del contesto distribuito avviene tramite header **W3C TraceContext** (`traceparent`) iniettati in ogni chiamata HTTP, permettendo la ricostruzione della trace end-to-end in sistemi come Jaeger.
 
 #### Sequence Diagram
+Nella seguente immagine viene mostrato il sequence diagram della soluzione agentica multi-agente.
 
 <div align="center">
       <img src="../Images/ApplicationArchitecture/01_a2a_multi-agent_demo_sequence.png" alt="01_a2a_multi-agent_demo sequence diagram" width="800">
 </div>
 
 #### Architettura Applicativa
+Nella seguente immagine viene mostrata l'architettura applicativa di una soluzione agentica multi-agente.
 
 <div align="center">
       <img src="../Images/ApplicationArchitecture/01_a2a_multi-agent_demo_apparch.png" alt="01_a2a_multi-agent_demo_apparch" width="800">
@@ -63,13 +65,18 @@ Al boot, il `SkillLoader` scansiona la directory `skills/`, trova ogni sottocart
 Quando il supervisore riceve una richiesta, il LLM (Bedrock) analizza il testo e decide quale tool invocare. L'invocazione è una chiamata Python sincrona diretta: nessuna rete, nessuna serializzazione HTTP. La skill esegue il proprio agente Ollama in un thread separato (via `ThreadPoolExecutor`) per non bloccare l'event loop di uvicorn.
 
 #### Sequence Diagram
+Nella seguente immagine viene mostrato il sequence diagram della soluzione agentica mono-agente che utilizza l'approccio a skills.
 
-![02_skills_demo sequence diagram](/Images/ApplicationArchitecture/02_skills_demo_sequence.png)
+<div align="center">
+      <img src="../Images/ApplicationArchitecture/02_skills_demo_sequence.png" alt="02_skills_demo_sequence" width="800">
+</div>
 
 #### Architettura Applicativa
-Nella seguente immagine viene mostrata l'architettura applicativa di una soluzione agentica mono-agente che utilizza la tecnica a skills.
+Nella seguente immagine viene mostrata l'architettura applicativa di una soluzione agentica mono-agente che utilizza l'approccio a skills.
 
-![alt text](/Images/ApplicationArchitecture/02_skills_demo_apparch.png)
+<div align="center">
+      <img src="../Images/ApplicationArchitecture/02_skills_demo_apparch.png" alt="02_skills_demo_apparch" width="800">
+</div>
 
 Approccio Skills (mono-agente) — un singolo processo Python su porta 9000 che contiene tutto:
 
