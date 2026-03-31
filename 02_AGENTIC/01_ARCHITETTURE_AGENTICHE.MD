@@ -67,6 +67,7 @@ Quando il supervisore riceve una richiesta, il LLM (Bedrock) analizza il testo e
 ![02_skills_demo sequence diagram](/Images/ApplicationArchitecture/02_skills_demo_sequence.png)
 
 #### Architettura Applicativa
+Nella seguente immagine viene mostrata l'architettura applicativa di una soluzione agentica mono-agente che utilizza la tecnica a skills.
 
 ![alt text](/Images/ApplicationArchitecture/02_skills_demo_apparch.png)
 
