@@ -93,5 +93,5 @@ Rispetto alla versione A2A multi-agent: nessuna latenza di rete interna, un solo
 
 ---
 
-*Documento aggiornato al 30 marzo 2026*
+*Documento aggiornato al 29 marzo 2026*
 

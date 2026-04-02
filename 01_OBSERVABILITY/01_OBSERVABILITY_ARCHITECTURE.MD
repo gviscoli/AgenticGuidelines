@@ -94,4 +94,4 @@ Il percorso che compie una metrica, per esempio <b>agent_input_tokens_total</b> 
 
 ---
 
-*Documento aggiornato al 30 marzo 2026*
+*Documento aggiornato al 29 marzo 2026*
