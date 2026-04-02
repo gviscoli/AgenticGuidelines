@@ -195,7 +195,7 @@ Ogni handoff tra agenti introduce un punto di potenziale fallimento. Modelli mig
 
 ---
 
-## Tabella Comparativa: Mono-Agente vs Multi-Agente (un primo assggio)
+## Tabella Comparativa: Mono-Agente vs Multi-Agente (un primo assaggio)
 
 | Dimensione | Mono-Agente | Multi-Agente |
 |---|---|---|
