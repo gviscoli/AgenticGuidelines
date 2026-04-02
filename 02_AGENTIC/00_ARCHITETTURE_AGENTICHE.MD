@@ -39,11 +39,11 @@ Un sistema multi-agente distribuisce l'esecuzione del workflow tra più agenti c
 
 ---
 
-## Il Punto di Vista dei Cloud Provider (oggi ;) )
+## Il Punto di Vista dei Cloud Provider (oggi :smiley: )
 
-### 3.1 Anthropic — "Start Simple, Scale Intelligently"
+### Anthropic — "Start Simple, Scale Intelligently"
 
-La posizione di Anthropic è tra le più influenti nel settore. La guida "Building Effective Agents" di Erik Schluntz e Barry Zhang propone sei pattern composabili, da semplici workflow a sistemi agentici complessi:
+La posizione di Anthropic è tra le più influenti nel settore. La guida **"Building Effective Agents"** di Erik Schluntz e Barry Zhang propone sei pattern composabili, da semplici workflow a sistemi agentici complessi:
 
 1. **Prompt Chaining** — catena sequenziale con gate di qualità
 2. **Routing** — classificazione e instradamento verso handler specializzati
@@ -60,7 +60,7 @@ Anthropic raccomanda tre principi: mantenere la semplicità dell'architettura, i
 > **Fonte:** [Anthropic — Architecture Patterns and Implementation Frameworks (PDF)](https://resources.anthropic.com/hubfs/Building%20Effective%20AI%20Agents-%20Architecture%20Patterns%20and%20Implementation%20Frameworks.pdf)
 > **Fonte:** [Anthropic Cookbook — Agents Patterns](https://github.com/anthropics/anthropic-cookbook/tree/main/patterns/agents)
 
-### 3.2 OpenAI — "Single Agent First, Multi-Agent When Needed"
+### OpenAI — "Single Agent First, Multi-Agent When Needed"
 
 OpenAI ha rilasciato l'Agents SDK (evoluzione del progetto Swarm) con primitive minimali: Agent, Handoff, Guardrails, Tracing. La guida pratica segue un approccio incrementale simile ad Anthropic.
 
@@ -75,7 +75,7 @@ OpenAI raccomanda di partire con un singolo agente, espanderne le capability agg
 > **Fonte:** [OpenAI Agents SDK — Orchestration](https://openai.github.io/openai-agents-python/multi_agent/)
 > **Fonte:** [OpenAI Cookbook — Orchestrating Agents](https://cookbook.openai.com/examples/orchestrating_agents)
 
-### 3.3 Microsoft / Azure — Decision Tree Strutturato
+### Microsoft / Azure — Decision Tree Strutturato
 
 Microsoft offre il framework decisionale più strutturato. Il Cloud Adoption Framework include un vero e proprio **decision tree** per la scelta tra architetture. Il messaggio è netto: i sistemi multi-agente vengono spesso scelti sulla base di assunzioni non verificate.
 
@@ -92,17 +92,34 @@ Microsoft offre il framework decisionale più strutturato. Il Cloud Adoption Fra
 - La latenza si accumula ad ogni punto di handoff
 - I costi crescono per il contesto ridondante processato da ciascun agente
 
-Microsoft ha anche unificato AutoGen (ricerca) e Semantic Kernel (enterprise) nel nuovo **Microsoft Agent Framework** (public preview da ottobre 2025), che supporta sia Agent Orchestration (LLM-driven) che Workflow Orchestration (deterministica).
+Microsoft ha anche unificato AutoGen (ricerca) e Semantic Kernel (enterprise) nel nuovo **Microsoft Agent Framework** (public preview da ottobre 2025), che supporta sia **Agent Orchestration (LLM-driven)** che **Workflow Orchestration (deterministica)**.
 
 > **Fonte:** [Microsoft — Single vs Multi-Agent Decision](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ai-agents/single-agent-multiple-agents)
 > **Fonte:** [Microsoft Agent Framework Overview](https://learn.microsoft.com/en-us/agent-framework/overview/)
 > **Fonte:** [Introducing Microsoft Agent Framework — Azure Blog](https://azure.microsoft.com/en-us/blog/introducing-microsoft-agent-framework/)
 
-### 3.4 Google Cloud — Pattern Catalogue con ADK
+### AWS — Lifecycle Progressivo e Resilienza
+
+AWS adotta un approccio **lifecycle-oriented**. La guida per startup di AWS raccomanda esplicitamente:
+
+- **Stage 1**: un singolo agente, un singolo outcome, stateless. Evitare framework multi-agente.
+- **Stage 2**: aggiungere session memory, output strutturati, guardrails. "Still avoid swarms."
+- **Stage 3+**: introdurre multi-agente solo quando la crescita lo richiede.
+
+AWS fornisce anche guide dettagliate sulla resilienza dei sistemi agentici, identificando sette dimensioni architetturali (foundation model, orchestrazione, tool, memoria, guardrails, interfaccia utente, infrastruttura) e cinque modalità di fallimento comuni. Per la multi-agent orchestration, AWS propone un pattern Supervisor Agent con sub-agenti specializzati tramite **Amazon Bedrock AgentCore**.
+
+> **Fonte:** [AWS — Build AI Agents That Scale](https://aws.amazon.com/startups/learn/build-ai-agents-that-scale-a-practical-lifecycle-for-startup-agent-architecture-?lang=en-US)
+> **Fonte:** [AWS — Build Resilient Generative AI Agents](https://aws.amazon.com/blogs/architecture/build-resilient-generative-ai-agents/)
+> **Fonte:** [AWS — AI Agents Best Practices with Bedrock AgentCore](https://aws.amazon.com/blogs/machine-learning/ai-agents-in-enterprises-best-practices-with-amazon-bedrock-agentcore/)
+> **Fonte:** [AWS — Multi-Agent Orchestration Guidance](https://aws.amazon.com/solutions/guidance/multi-agent-orchestration-on-aws/)
+> **Fonte:** [AWS — Agentic AI Patterns](https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-patterns/introduction.html)
+
+
+### Google Cloud — Pattern Catalogue con ADK
 
 Google Cloud fornisce una guida architetturale completa tramite il Cloud Architecture Center, accompagnata dall'Agent Development Kit (ADK) — framework open-source ottimizzato per Gemini ma model-agnostic.
 
-Google identifica pattern sia single-agent che multi-agent, con enfasi sulla scelta guidata dalle caratteristiche del workload: complessità del task, requisiti di latenza/performance, budget costi, e necessità di intervento umano.
+Google identifica pattern sia **single-agent** che **multi-agent**, con enfasi sulla scelta guidata dalle caratteristiche del workload: complessità del task, requisiti di latenza/performance, budget costi, e necessità di intervento umano.
 
 Per i sistemi multi-agente, Google supporta interazione tramite shared session state, model-driven delegation (routing tra agenti), e invocazione esplicita (un agente chiama un altro come funzione). I protocolli chiave sono:
 
@@ -117,29 +134,13 @@ Google enfatizza che i sistemi multi-agente richiedono valutazioni aggiuntive su
 > **Fonte:** [Google ADK Documentation](https://google.github.io/adk-docs/)
 > **Fonte:** [Google Cloud Blog — Building Scalable AI Agents](https://cloud.google.com/blog/topics/partners/building-scalable-ai-agents-design-patterns-with-agent-engine-on-google-cloud)
 
-### 3.5 AWS — Lifecycle Progressivo e Resilienza
-
-AWS adotta un approccio lifecycle-oriented. La guida per startup di AWS raccomanda esplicitamente:
-
-- **Stage 1**: un singolo agente, un singolo outcome, stateless. Evitare framework multi-agente.
-- **Stage 2**: aggiungere session memory, output strutturati, guardrails. "Still avoid swarms."
-- **Stage 3+**: introdurre multi-agente solo quando la crescita lo richiede.
-
-AWS fornisce anche guide dettagliate sulla resilienza dei sistemi agentici, identificando sette dimensioni architetturali (foundation model, orchestrazione, tool, memoria, guardrails, interfaccia utente, infrastruttura) e cinque modalità di fallimento comuni. Per la multi-agent orchestration, AWS propone un pattern Supervisor Agent con sub-agenti specializzati tramite Amazon Bedrock AgentCore.
-
-> **Fonte:** [AWS — Build AI Agents That Scale](https://aws.amazon.com/startups/learn/build-ai-agents-that-scale-a-practical-lifecycle-for-startup-agent-architecture-?lang=en-US)
-> **Fonte:** [AWS — Build Resilient Generative AI Agents](https://aws.amazon.com/blogs/architecture/build-resilient-generative-ai-agents/)
-> **Fonte:** [AWS — AI Agents Best Practices with Bedrock AgentCore](https://aws.amazon.com/blogs/machine-learning/ai-agents-in-enterprises-best-practices-with-amazon-bedrock-agentcore/)
-> **Fonte:** [AWS — Multi-Agent Orchestration Guidance](https://aws.amazon.com/solutions/guidance/multi-agent-orchestration-on-aws/)
-> **Fonte:** [AWS — Agentic AI Patterns](https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-patterns/introduction.html)
-
 ---
 
-## 4. Evidenze dalla Ricerca Accademica
+## Evidenze dalla Ricerca Accademica
 
-### 4.1 Google DeepMind — "Towards a Science of Scaling Agent Systems"
+### Google DeepMind — "Towards a Science of Scaling Agent Systems"
 
-Lo studio più rigoroso sul tema è il paper di Yubin Kim et al. (Google DeepMind/MIT, dicembre 2025), che ha testato **180 configurazioni** attraverso 5 architetture agentiche e 3 famiglie LLM (GPT, Gemini, Claude). I risultati principali:
+Lo studio più rigoroso sul tema è il paper di **Yubin Kim et al**. (Google DeepMind/MIT, dicembre 2025), che ha testato **180 configurazioni** attraverso 5 architetture agentiche e 3 famiglie LLM (GPT, Gemini, Claude). I risultati principali:
 
 **Amplificazione degli errori dipendente dalla topologia:**
 - Sistemi multi-agente indipendenti (senza coordinazione) amplificano gli errori di **17.2x** rispetto al baseline mono-agente
@@ -154,25 +155,25 @@ Lo studio più rigoroso sul tema è il paper di Yubin Kim et al. (Google DeepMin
 - Coordinazione decentralizzata eccelle nella web navigation (+9.2%)
 - Per task di ragionamento sequenziale, **tutte le varianti multi-agente peggiorano le performance del 39-70%**
 
-**Modello predittivo:** il team ha sviluppato un modello (R² = 0.513) che usa proprietà misurabili del task (conteggio tool, decomponibilità) per predire l'architettura ottimale nell'87% delle configurazioni di test.
+**Modello predittivo:** il team ha sviluppato un modello che usa proprietà misurabili del task (conteggio tool, decomponibilità) per predire l'architettura ottimale nell'87% delle configurazioni di test.
 
 > **Fonte:** [arXiv:2512.08296 — Towards a Science of Scaling Agent Systems](https://arxiv.org/abs/2512.08296)
 > **Fonte:** [Google Research Blog — When and Why Agent Systems Work](https://research.google/blog/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/)
 > **Fonte:** [MIT Media Lab — Project Overview](https://www.media.mit.edu/projects/towards-a-science-of-scaling-agent-systems-when-and-why-agent-systems-work/overview/)
 
-### 4.2 Cornell University — Vantaggi del Multi-Agente Coordinato
+### Cornell University — Vantaggi del Multi-Agente Coordinato
 
-Uno studio della Cornell University ha mostrato che sistemi multi-agente sincronizzati raggiungono un tasso di successo del **42.68%** su task di pianificazione complessa, contro il **2.92%** di un singolo agente GPT-4. Questo dimostra che per specifiche classi di problemi — altamente parallelizzabili e cross-funzionali — il multi-agente è significativamente superiore.
+Uno studio della **Cornell University** ha mostrato che sistemi multi-agente sincronizzati raggiungono un tasso di successo del **42.68%** su task di pianificazione complessa, contro il **2.92%** di un singolo agente GPT-4. Questo dimostra che per specifiche classi di problemi — altamente parallelizzabili e cross-funzionali — il multi-agente è significativamente superiore.
 
 > **Fonte citata in:** [Dataiku — Single-Agent vs Multi-Agent Systems](https://www.dataiku.com/stories/blog/single-agent-vs-multi-agent-systems)
 
-### 4.3 MAST — Multi-Agent Systems Failure Taxonomy
+### MAST — Multi-Agent Systems Failure Taxonomy
 
 Lo studio MAST (marzo 2025) ha analizzato **1.642 tracce di esecuzione** attraverso 7 framework open-source multi-agente. I tassi di fallimento variavano dal **41% all'86.7%**, con la categoria di fallimento più grande rappresentata da **coordination breakdown (36.9%** di tutti i fallimenti).
 
 > **Fonte citata in:** [Towards Data Science — The Multi-Agent Trap](https://towardsdatascience.com/the-multi-agent-trap/)
 
-### 4.4 UC Berkeley — Measuring Agents in Production
+### UC Berkeley — Measuring Agents in Production
 
 Il report di UC Berkeley (dicembre 2025), basato su 306 practitioner e 20 case study approfonditi (inclusi Accenture, Amazon, Google, IBM, Samsung), ha evidenziato che gli agenti in produzione non sanno usare efficacemente risorse extra di compute — l'85% del budget rimane inutilizzato.
 
@@ -180,7 +181,7 @@ Il report di UC Berkeley (dicembre 2025), basato su 306 practitioner e 20 case s
 
 ---
 
-## 5. La Matematica Composta dell'Affidabilità
+## La Matematica Composta dell'Affidabilità
 
 Un aspetto cruciale spesso sottovalutato è l'effetto composto dell'affidabilità. Se un singolo agente completa uno step con il 99% di affidabilità (eccellente), concatenare 10 step sequenziali produce:
 
@@ -194,7 +195,7 @@ Ogni handoff tra agenti introduce un punto di potenziale fallimento. Modelli mig
 
 ---
 
-## 6. Tabella Comparativa: Mono-Agente vs Multi-Agente (un primo assggio)
+## Tabella Comparativa: Mono-Agente vs Multi-Agente (un primo assggio)
 
 | Dimensione | Mono-Agente | Multi-Agente |
 |---|---|---|
@@ -211,29 +212,29 @@ Ogni handoff tra agenti introduce un punto di potenziale fallimento. Modelli mig
 
 ---
 
-## 7. Pattern Architetturali Multi-Agente
+## Pattern Architetturali Multi-Agente
 
 Quando il multi-agente è giustificato, esistono diverse topologie di coordinazione, ciascuna con trade-off specifici:
 
-### 7.1 Centralizzato (Supervisor/Orchestrator)
+### Centralizzato (Supervisor/Orchestrator)
 
 Un agente orchestratore gestisce la decomposizione dei task, delega ai worker, e sintetizza i risultati. È il pattern più raccomandato perché contiene l'amplificazione degli errori (4.4x vs 17.2x dei sistemi indipendenti). L'orchestrator funge da "validation bottleneck". Rischio: bottleneck se ogni decisione passa per un singolo agente.
 
-### 7.2 Decentralizzato (Handoff/Peer-to-Peer)
+### Decentralizzato (Handoff/Peer-to-Peer)
 
 Agenti alla pari che si passano il controllo in base al contesto. Nessun supervisore. Eccelle nella web navigation (+9.2% rispetto al centralizzato). Rischio: perdita di contesto globale e coordinazione difficile.
 
-### 7.3 Ibrido
+### Ibrido
 
 Combina supervisione centralizzata con esecuzione distribuita. Governance del mono-agente + capability del multi-agente. È dove si posizionano la maggior parte dei deployment enterprise seri. Framework come LangGraph, CrewAI, e il Microsoft Agent Framework supportano questo pattern.
 
-### 7.4 Sequenziale (Pipeline)
+### Sequenziale (Pipeline)
 
 Agenti specializzati eseguiti in ordine lineare predefinito. Output di uno → input del successivo. Ottimale quando i passaggi sono ben definiti e prevedibili. Supportato nativamente da Google ADK.
 
 ---
 
-## 8. Framework e Tool dell'Ecosistema
+## Framework e Tool dell'Ecosistema
 
 | Framework | Provider | Caratteristiche Chiave |
 |---|---|---|
@@ -252,7 +253,7 @@ Agenti specializzati eseguiti in ordine lineare predefinito. Output di uno → i
 
 ---
 
-## 9. Protocolli di Comunicazione Inter-Agente
+## Protocolli di Comunicazione Inter-Agente
 
 Due protocolli emergenti stanno standardizzando la comunicazione agentica:
 
@@ -266,7 +267,7 @@ Entrambi i protocolli sono supportati dal Microsoft Agent Framework, da Google A
 
 ---
 
-## 10. Framework Decisionale: Quando Usare Cosa
+## Framework Decisionale: Quando Usare Cosa
 
 ### Parti con un Mono-Agente quando:
 
@@ -293,7 +294,7 @@ Entrambi i protocolli sono supportati dal Microsoft Agent Framework, da Google A
 
 ---
 
-## 11. Raccomandazioni Operative
+## Raccomandazioni Operative
 
 1. **Validare le assunzioni prima di scegliere l'architettura.** Come sottolinea Microsoft, le architetture multi-agente sono spesso scelte sulla base di assunzioni non testate sulla complessità o le performance. Iniziare sempre con un prototipo mono-agente per stabilire un baseline.
 
@@ -311,7 +312,7 @@ Entrambi i protocolli sono supportati dal Microsoft Agent Framework, da Google A
 
 ---
 
-## 12. Conclusione
+## Conclusione
 
 Il consenso emergente tra cloud provider, ricercatori e practitioner è sorprendentemente uniforme: **iniziare semplice, misurare tutto, aggiungere complessità solo quando dimostrabilmente migliora i risultati.**
 
