@@ -1,20 +1,5 @@
 # Architetture Agentiche a Confronto
 
-## Contesto e Stato dell'Arte
-Lo sviluppo di sistemi agentici basati su Large Language Model (LLM) rappresenta oggi il paradigma dominante per l'automazione intelligente. Tutti i principali cloud provider e i laboratori di ricerca hanno pubblicato framework, guide architetturali e studi empirici sul tema. Questo documento sintetizza i principali punti di vista, offrendo un framework decisionale basato su evidenze.
-
-Il passaggio dai semplici chatbot a sistemi agentici autonomi è stato rapido: Amazon riporta migliaia di agenti costruiti internamente dal 2025, Gartner prevede che il 40% delle applicazioni enterprise integrerà agenti task-specific entro fine 2026, e IBM stima che i workflow AI-enabled passeranno dal 3% al 25% entro fine 2025.
-
-> **Fonti principali:**
-> - [Anthropic — Building Effective Agents](https://www.anthropic.com/research/building-effective-agents)
-> - [OpenAI — A Practical Guide to Building Agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
-> - [Microsoft — Single vs Multi-Agent Decision Framework](https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ai-agents/single-agent-multiple-agents)
-> - [Google Cloud — Choose a Design Pattern for Your Agentic AI System](https://docs.cloud.google.com/architecture/choose-design-pattern-agentic-ai-system)
-> - [Google DeepMind — Towards a Science of Scaling Agent Systems (arXiv:2512.08296)](https://arxiv.org/abs/2512.08296)
-> - [AWS — Agentic AI Patterns and Workflows](https://docs.aws.amazon.com/prescriptive-guidance/latest/agentic-ai-patterns/introduction.html)
-
----
-
 ## Multi-Agent A2A vs Single-Agent con Skills dinamiche
 
 ---
