@@ -21,7 +21,7 @@ Il passaggio dai semplici chatbot a sistemi agentici autonomi è stato rapido: *
 
 Anthropic introduce una distinzione architetturale cruciale tra **workflow** e **agent**:
 
-- **Workflow**: sistemi in cui LLM e tool sono orchestrati attraverso percorsi di codice predefiniti (deterministici). Includono pattern come prompt chaining, routing, parallelizzazione.
+- **Workflow**: sistemi in cui LLM e tool sono orchestrati attraverso percorsi di codice predefiniti (deterministici). Includono pattern come **prompt chaining**, **routing**, **parallelizzazione**.
 - **Agent**: sistemi in cui l'LLM dirige dinamicamente i propri processi e l'uso dei tool, mantenendo il controllo su come raggiungere gli obiettivi.
 
 Questa distinzione è condivisa da OpenAI nella propria guida pratica, dove si sottolinea che ogni approccio di orchestrazione richiede il concetto di "run loop" — un ciclo che consente all'agente di operare fino a una condizione di uscita.
@@ -31,17 +31,15 @@ Questa distinzione è condivisa da OpenAI nella propria guida pratica, dove si s
 
 ### Mono-Agente (Single-Agent)
 
-Un sistema mono-agente utilizza un singolo LLM potenziato con tool, retrieval e memoria che gestisce l'intero task dall'inizio alla fine. Esiste un unico loop di ragionamento. L'agente può effettuare multiple chiamate a modello e iterare, ma la logica decisionale resta centralizzata in un solo processo.
+Un sistema mono-agente utilizza un singolo LLM potenziato con **tool** e/o **skills**, **retrieval** e **memoria** che gestisce l'intero task dall'inizio alla fine. Esiste **un unico loop di ragionamento**. L'agente può effettuare multiple chiamate al modello e iterare, ma la logica decisionale resta centralizzata in **un solo processo**.
 
 ### Multi-Agente (Multi-Agent)
 
-Un sistema multi-agente distribuisce l'esecuzione del workflow tra più agenti coordinati, ognuno con un ruolo specializzato. Richiede pattern di orchestrazione espliciti — supervisor/orchestrator, handoff peer-to-peer, o topologie ibride — e meccanismi di comunicazione inter-agente.
+Un sistema multi-agente distribuisce l'esecuzione del workflow tra più agenti coordinati, ognuno con un ruolo specializzato. Richiede pattern di orchestrazione espliciti — **supervisor/orchestrator**, **handoff peer-to-peer**, o **topologie ibride** — e meccanismi di comunicazione inter-agente.
 
 ---
 
----
-
-## 3. Il Punto di Vista dei Cloud Provider
+## Il Punto di Vista dei Cloud Provider (oggi ;) )
 
 ### 3.1 Anthropic — "Start Simple, Scale Intelligently"
 
