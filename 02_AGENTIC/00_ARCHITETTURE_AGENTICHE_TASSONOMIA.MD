@@ -27,13 +27,7 @@ Descrivono come i componenti comunicano. **MCP**, **A2A** e **ACP** sono protoco
 Nella pratica, un sistema agentico di produzione combina elementi da tutte e quattro le categorie. Ad esempio, un Agente usa il **paradigma di ragionamento ReAct** (dentro ogni ChatAgent), il **meccanismo Function Calling** (per invocare i tool), il **design pattern Supervisor/Worker** (il supervisor delega agli agent specializzati), e il **protocollo A2A** (per la comunicazione di rete).
 
 
-## La terminologia che si sta consolidando
-La letteratura del 2026 converge su una terminologia a livelli che rispecchia questa distinzione. L'articolo di riferimento su arXiv (Agentic AI: Architectures, Taxonomies) propone una tassonomia a sei dimensioni: Core Components, Cognitive Architecture, Learning, Multi-Agent Systems, Environments, Evaluation. Il paper di ScienceDirect (Agentic AI: The Age of Reasoning) identifica cinque "key patterns": Tool Use, Reflection, ReAct, Planning e Multi-Agent Collaboration — ma usa il termine "pattern" in senso ampio, non nel senso GoF.
-
-La proposta più pulita è quella che emerge dalla sintesi delle fonti: usare "agentic design patterns" per i pattern architetturali di coordinazione (Supervisor/Worker, Pipeline, ecc.) e "reasoning paradigms" per le strategie cognitive (ReAct, CoT, ToT). In questo modo si evita ambiguità.
-
-
-I paradigmi dello sviluppo agentico
+## I paradigmi dello sviluppo agentico
 Lo sviluppo di sistemi agentici si è evoluto attraverso paradigmi progressivamente più sofisticati. Non si tratta di fasi che si sostituiscono, ma di livelli che si accumulano: i sistemi di produzione del 2026 ne combinano tipicamente quattro o cinque contemporaneamente.
 1. Chain-of-Thought (CoT)
 Il punto di partenza. L'LLM viene istruito a ragionare passo dopo passo prima di produrre una risposta. Non è ancora un "agente" in senso stretto — non agisce sul mondo esterno — ma è il prerequisito cognitivo per tutti i paradigmi successivi. Il limite principale è che il ragionamento avviene in isolamento: l'LLM non può verificare le sue ipotesi contro dati reali, il che porta a hallucination.
