@@ -33,6 +33,8 @@ Questa distinzione è condivisa da OpenAI nella propria guida pratica, dove si s
 
 Un sistema mono-agente utilizza un singolo LLM potenziato con **tool** e/o **skills**, **retrieval** e **memoria** che gestisce l'intero task dall'inizio alla fine. Esiste **un unico loop di ragionamento**. L'agente può effettuare multiple chiamate al modello e iterare, ma la logica decisionale resta centralizzata in **un solo processo**.
 
+Una variante evoluta è il mono-agente con sub-agent in-process: il supervisor mantiene un unico punto di ingresso e coordinazione, ma ogni skill/capability può incapsulare il proprio LLM specializzato. Questo approccio conserva il vantaggio operativo del processo singolo (nessuna comunicazione di rete interna per la coordinazione) pur consentendo model routing per dominio — modelli leggeri per task semplici, modelli più capaci per task complessi.
+
 ### Multi-Agente (Multi-Agent)
 
 Un sistema multi-agente distribuisce l'esecuzione del workflow tra più agenti coordinati, ognuno con un ruolo specializzato. Richiede pattern di orchestrazione espliciti — **supervisor/orchestrator**, **handoff peer-to-peer**, o **topologie ibride** — e meccanismi di comunicazione inter-agente.
@@ -202,6 +204,7 @@ Ogni handoff tra agenti introduce un punto di potenziale fallimento. Modelli mig
 | **Complessità di sviluppo** | Bassa — settimane | Alta — mesi |
 | **Costi operativi (token)** | Baseline | 10-15x il mono-agente |
 | **Latenza** | Minima | Cumulativa ad ogni handoff |
+| **Model Routing** | Possibile (ogni skill può usare un LLM diverso), ma l'infrastruttura di inferenza resta da gestire | Naturale (ogni agente ha il proprio LLM e può scalare indipendentemente) |
 | **Debugging/Audit** | Un singolo loop da tracciare | Multipli flussi da coordinare |
 | **Sicurezza** | Superficie ridotta | Superfici espanse (credentials, transito dati) |
 | **Scalabilità funzionale** | Limitata (~20 tool) | Potenzialmente illimitata |
