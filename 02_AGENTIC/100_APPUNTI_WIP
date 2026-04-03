@@ -1,3 +1,11 @@
+
+
+
+
+
+
+
+
 # I quattro pilastri dell'architettura agentica
 Lo sviluppo di sistemi agentici basati su LLM ha prodotto in pochi mesi un ecosistema ricco ma terminologicamente caotico. Termini come **"ReAct"**, **"function calling"**, **"supervisor pattern"** e **"MCP"**, **A2A** vengono spesso raggruppati sotto l'etichetta generica di "design pattern", ma in realtà appartengono a categorie concettuali distinte che operano a livelli diversi dello stack. Confonderli non è solo un problema accademico: porta a decisioni architetturali sbagliate, perché significa mescolare il come un agente ragiona con il come è strutturato il sistema o il come i componenti comunicano.
 
