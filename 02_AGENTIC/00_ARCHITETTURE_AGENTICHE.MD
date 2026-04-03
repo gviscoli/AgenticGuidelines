@@ -313,6 +313,7 @@ Entrambi i protocolli sono supportati dal Microsoft Agent Framework, da Google A
 
 7. **Progettare per evoluzione modulare.** Iniziare con mono-agente, progettare per la modularità (prompt centralizzati, tool con interfacce chiare, stato esternalizzato), evolvere verso multi-agente solo quando i dati lo giustificano.
 
+8. **Misurare prima di decidere.** Se possibile, implementare lo stesso caso d'uso in entrambe le architetture con la stessa infrastruttura di inferenza (stessi modelli, stesso hardware) per isolare l'impatto della topologia di coordinazione. Solo in una seconda fase introdurre variabili come model routing differenziato per dominio.
 ---
 
 ## Conclusione
